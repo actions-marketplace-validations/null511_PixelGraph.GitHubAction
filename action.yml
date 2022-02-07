@@ -16,4 +16,7 @@ inputs:
 runs:
   using: 'docker'
   image: 'docker://null511/pixelgraph'
-  entrypoint: '/app/PixelGraph publish -p "${{inputs.profile}}" -z "${{inputs.zip}}"'
+  args:
+    - 'publish'
+    - '-p "${{inputs.profile}}"'
+    - '-z "${{inputs.zip}}"'
