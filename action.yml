@@ -1,6 +1,7 @@
 # action.yml
 name: 'PixelGraph-Publish'
 description: 'Publishs a PixelGraph project into a game-ready resource pack.'
+author: null511
 inputs:
   profile:
     description: 'The filename of the publish profile to use.'
@@ -10,11 +11,6 @@ inputs:
     default: 'release.zip'
     required: true
 runs:
-  using: 'composite'
-  steps:
-    - run: docker pull null511/pixelgraph
-      shell: bash
-    - run: |
-        docker run --name pixelgraph --rm --mount src="$(pwd)",target=//publish,type=bind null511/pixelgraph \
-          publish -p "//publish/${{inputs.profile}}" -z "//publish/${{inputs.zip}}"
-      shell: bash
+  using: 'docker'
+  image: 'docker://null511/pixelgraph'
+  entrypoint: '/app/PixelGraph publish -p "${{inputs.profile}}" -z "${{inputs.zip}}"'
